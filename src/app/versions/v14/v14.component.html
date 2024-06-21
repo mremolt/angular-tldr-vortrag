@@ -1,0 +1,38 @@
+<h2>Neuigkeiten in Angular V14</h2>
+
+<h3>Standalone Components (experimentell)</h3>
+
+<p>
+  Mit Angular Version 14 wurden zum ersten Mal Standalone Components vorgestellt, also die Möglichkeit, auf NgModules zu
+  verzichten und Abhängigkeiten direkt bei der Component zu definieren.
+</p>
+
+<p>
+  Ich werde den Standalone Components später einen eigenen Abschnitt widmen, daher gehe ich an dieser Stelle nicht näher
+  darauf ein.
+</p>
+
+<h3>Angular Forms mit Typsicherheit</h3>
+
+<p>
+  Dieses Feature steht seit Angular V2 schon ganz oben auf meiner Wunschliste. Eines meiner ersten Angular (V2+)
+  Projekte war die Umsetzung ganz vieler Formulare für ein Projekt bei der DATEV. Angefangen haben wir da noch mit
+  Beta-Versionen von Angular 2 und wir waren das erste Angular-Projekt in der DATEV, das in Produktion gegangen ist. Für
+  die DATEV-Internen - ich bin mit Schuld an IFO.
+</p>
+
+<p class="center"><img src="shame.gif" /></p>
+
+<p>
+  Schon damals hätte es dem Projekt und meiner geistigen Gesundheit sehr geholfen, wenn die Daten des Formulars von
+  Angular nicht konsequent mit "any" typisiert gewesen wären. Gerade wenn man lange, mehrstufige Formulare hat, in denen
+  Formularteile auf vorherige Eingaben reagieren, hilft es sehr, wenn die IDE die Datenstruktur kennt und Kontexthilfe
+  anbieten kann.
+</p>
+
+<p>
+  Wenn man ab Angular V14 ein Formular über die Reactive-Forms-API definiert, kennt das Formular automatisch die
+  Datenstruktur, die es verwalten soll. Man erhält also Kontexthilfe in der IDE oder Typ-Fehler, wenn man versucht, in
+  dem Formular inkorrekte Werte zu setzen. Einen guten Überblick über das Thema findet ihr zum Beispiel
+  <a href="https://angular.schule/blog/2022-05-typed-forms" target="_blank">hier</a>.
+</p>

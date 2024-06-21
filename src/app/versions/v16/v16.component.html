@@ -1,0 +1,129 @@
+<h2>Neuigkeiten in Angular V16</h2>
+
+<p>
+  Mit V16 erhielt eine Menge neuer Funktionen und Konzepte Einzug in Angular. Alle davon waren zu diesem Zeitpunkt als
+  "experimental" markiert, sprich Testen gerne, aber noch nicht in Produktion verwenden. Die meisten davon, sind
+  inzwischen aber "stable" und werden in vielen Projekten genutzt.
+</p>
+
+<h3>Einführung von Signals (experimental)</h3>
+
+<p>
+  Signals sind zusammen mit Standalone Components die größte architekturelle Änderung seit dem Release von Angular V2.
+  Sie überarbeiten grundsätzlich, wie das Framework Änderungen in Daten registriert und darauf reagiert.
+</p>
+
+<p>
+  Da es sich bei Signals um ein großes Thema handelt und mit jedem Release neue Dinge hinzugekommen sind, widme ich dem
+  Thema später einen eigenen Abschnitt.
+</p>
+
+<h3>Esbuild als Alternative zu Webpack (experimental)</h3>
+
+<figure class="center">
+  <img src="speed.webp" alt="Huiiiiiiiiii" />
+  <figcaption>Ein Bild sagt mehr als 1000 Worte ...</figcaption>
+</figure>
+
+<p>
+  Der Code-Bundler Esbuild ist mehrere Größenordnungen schneller als das seit vielen Jahren verwendete Webpack. Sowohl
+  die produktiven Builds, aber auch besonders die inkrementellen Builds während der Entwicklung laufen mit diesem Tool
+  um mehrere Größenordnungen schneller.
+</p>
+
+<figure class="center">
+  <img src="build-charts.webp" alt="Angular Build Zeiten als Chart" width="600" />
+  <figcaption>Angular Build Zeiten als Chart (Quelle: Angular Blog)</figcaption>
+</figure>
+
+<p>
+  Man soll ja keinen Charts trauen, die man nicht selbst gefälscht hat, aber ich kann die Performance-Gewinne zumindest
+  subjektiv bestätigen.
+</p>
+
+<p>
+  Die Umstellung von Bestandsprojekten ist in den meisten Fällen mit wenig Aufwand machbar. Natürlich kann es je nach
+  Setup oder verwendeten Abhängigkeiten auch mehr Arbeit machen, aber für viele Projekte kann das ein großer
+  Produktivitätsschub ohne wochenlange Optimierungen sein. Inzwischen (seit V17) ist das neue Build-System stabil und
+  Standard bei neuen Projekten und seit V18 gibt es sogar eine Angular Migration, um sein Projekt automatisch
+  umzustellen. Die Dokumentation findet ihr
+  <a href="https://angular.dev/tools/cli/build-system-migration" target="_blank">hier</a>.
+</p>
+
+<h3>SSR-Verbesserungen (experimental)</h3>
+
+<p>
+  <strong>Disclaimer</strong>: Mit Server Side Rendering (SSR) hatte ich in meiner bisherigen Projekt-Leben noch nie in
+  einem realen Auftrag zu tun. Ich habe eigentlich immer irgendwelche internen Systeme oder zumindest Anwendungen hinter
+  einem Kunden-Login gebaut. Der Vorteil von SSR war bei mir persönlich tatsächlich nie gegeben, daher ist meine
+  praktische Erfahrung hier begrenzt.
+</p>
+
+<p>SSR in Angular Anwendungen lief einfach gesagt bisher so ab:</p>
+
+<ul>
+  <li>HTML-Seite wird Server-seitig von Angular gerendert und als statisches HTML+CSS an den Browser ausgeliefert.</li>
+  <li>
+    Seite wird im Browser angezeigt, im Hintergrund startet der Download der eigentlichen Angular Anwendung (Für
+    Nicht-Techniker: das ganze JavaScript Zeugs)
+  </li>
+  <li>
+    Ist der Download fertig, startet die eigentliche Angular-Anwendung, wirft das bisher angezeigte HTML komplett weg
+    und ersetzt es durch das eigene.
+  </li>
+</ul>
+
+<p>
+  Nachteil dieses "Wegwerfens" ist, die Seite wird im Browser komplett neu aufgebaut. Wenn der Download länger gedauert
+  hat und der Benutzer bereits mit der Seite interagiert hat, kommt es u.U. zu Effekten wie gemachte Eingaben sind weg,
+  der Tastaturfokus verschwindet oder ein kurzes Flackern der ganzen Seite. Für viele der Probleme kann man Workarounds
+  finden, diese sind aber immer mit Extraaufwand verbunden.
+</p>
+
+<p>
+  Das neue Konzept der SSR-Hydration vermeidet diese Probleme, indem der Schritt des "Wegwerfens" entfällt. Ist Angular
+  bereit, von der statischen Seite zu übernehmen, ersetzt es nicht das bisherige HTML, sondern ergänzt es "nur noch" um
+  die Framework-Funktionen. Das Dokument an sich bleibt intakt, nur sind plötzlich die Funktionen der Anwendung
+  nachgerüstet worden.
+</p>
+
+<h3>Support für neue Test-Runner als Alternative zu Karma (experimental)</h3>
+
+<p>
+  Nach Protractor ist inzwischen auch Karma
+  <a
+    href="https://github.com/karma-runner/karma?tab=readme-ov-file#karma-is-deprecated-and-is-not-accepting-new-features-or-general-bug-fixes"
+    target="_blank"
+  >
+    offiziell deprecated
+  </a>
+  und viele Projekte sind inzwischen manuell auf Alternativen umgestiegen.
+</p>
+
+<p>
+  Mit V16 liefert Angular selbst Einbindungen für alternative Test-Runner, namentlich
+  <a href="https://jestjs.io/" target="_blank">Jest</a> und
+  <a href="https://modern-web.dev/docs/test-runner/overview/" target="_blank">Web Test Runner</a>. Beide Integrationen
+  sind allerdings selbst mit Stand V18 noch experimentell und in der offiziellen V18 Doku auch nicht erwähnt. Es wurde
+  vermutlich seit V16 nicht mehr daran gearbeitet, sie sind also (persönliche Einschätzung) mit Vorsicht zu genießen.
+</p>
+
+<h3>&#64;Input-Decorator kann "required" sein</h3>
+
+<p>
+  Ein kleines, aber wichtiges Feature: Ein "&#64;Input" kann nun als "required" markiert werden. Konsequenz ist,
+  übergibt die Elternkomponente keinen Wert, wird nun eine Exception geworfen.
+</p>
+
+<p>
+  Die Zeit, wo man in jeder Komponente überprüfen musste, ob der Wert tatsächlich da ist, ist nun endlich vorbei. /p>
+</p>
+
+<h3>Self-closing Tags</h3>
+
+<p>
+  Noch eine Kleinigkeit: Statt für jede Angular-Component im HTML den schließenden Tag mit angeben zu müssen, kann man
+  nun die Kurzschreibweise verwenden.
+</p>
+
+<pre><code [highlight]="example1" language="html" lineNumbers></code></pre>

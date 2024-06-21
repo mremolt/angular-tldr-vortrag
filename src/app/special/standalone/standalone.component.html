@@ -1,0 +1,29 @@
+<h2>Standalone Components</h2>
+
+<p>
+  Seit Angular V14 oder stabil seit V15 bietet Angular eine Alternative zu den bekannten &#64;NgModules. Nun können die
+  Abhängigkeiten einer Component (oder Directive/Pipe) direkt im &#64;Component-Decorator, statt in der zugehörigen
+  Module-Klasse, definiert werden.
+</p>
+
+<pre><code [highlight]="example1" language="typescript" lineNumbers></code></pre>
+
+<p>
+  In der Tat kann man sich so viel Boilerplate-Code sparen und - persönliche Meinung - es ist besser, wenn man in jeder
+  Component direkt sieht, was dort verwendet wird. Der klassische Pattern der Share-Modules haben das nicht mehr
+  wirklich ermöglicht.
+</p>
+<p>
+  Der Nachteil der Code-Duplikation ist richtig, aber imho nicht gravierend. Sollte eine Component so viele
+  Abhängigkeiten haben, dass man den Überblick verliert, ist eher das das Problem und ein Refactoring steht dringend an.
+</p>
+
+<p>
+  Wer einen amüsanten Rückblick in die alten Zeiten machen möchte, als NgModules in Angular 2 RC5 frisch eingeführt
+  wurden, wird
+  <a href="https://auth0.com/blog/angular-2-ngmodules/" target="_blank">hier fündig</a>. Das Lustige daran ist, die
+  Pre-NgModules-Syntax sieht doch sehr nach der neuen Standalone-Syntax aus, die damals als "unübersichtlich" und "wenig
+  skalierbar" abgelöst werden sollte.
+</p>
+
+<p class="center"><img src="star-wars-circle-is-now-complete.gif" /></p>

@@ -1,0 +1,76 @@
+<h2>Neuigkeiten in Angular V17</h2>
+
+<h3>Neue Template Syntax (preview)</h3>
+
+<p>
+  Angular bietet seit V17 eine neue, alternative Syntax für den Kontrollfluss in Templates, welche die klassischen
+  "*ngIf", "*ngFor" und "*ngSwitch"-Direktiven bald ersetzen soll. Hier ein Beispiel für die neue &#64;if-Anweisung:
+</p>
+
+<pre><code [highlight]="example1" language="html" lineNumbers></code></pre>
+
+<p>
+  Neben der kompakteren Syntax und besseren Lesbarkeit führt das Angular-Team vor allem bessere Typsicherheit und
+  Performance an. Auf die Gelegenheit, alte und umständliche Syntax loszuwerden (*hust* ngFor trackBy *hust*) ist nicht
+  zu verachten.
+</p>
+
+<p>Die aktuelle Doku findet ihr <a href="https://angular.dev/guide/templates/control-flow" target="_blank">hier</a>.</p>
+
+<h3>Deferrable Views</h3>
+
+<p>
+  Deferrable Views bieten die Möglichkeit, Teile einer Seite erst bei Bedarf (also basierend auf einem Auslöser)
+  nachzuladen. Die Funktion wird direkt im Template über einen &#64;defer-Block (neue Template-Syntax) umgesetzt.
+</p>
+
+<p>Mögliche Auslöser sind zum Beispiel:</p>
+
+<ul>
+  <li>Die Anwendung ist geladen und idle, hat also "Zeit".</li>
+  <li>Die entsprechende Komponente scrollt in den Viewport.</li>
+  <li>Der User klickt auf das Element.</li>
+  <li>Es sind x Sekunden vergangen.</li>
+  <li>...</li>
+</ul>
+
+<p>
+  Vorteil ist, diese Komponenten werden nicht durch diesen Auslöser verarbeitet, sondern tatsächlich erst nachgeladen.
+  Das bedeutet, die initiale Größe (also Download-Volumen) der Anwendung ist kleiner und man kann gezielt teure
+  Komponenten (Grids, Chart-Libraries ...) erst nachladen, wenn man sie tatsächlich benötigt. Und da man nur im Template
+  eine Anweisung eintragen muss und sich Angular um den Build-Teil kümmert (für Techniker: es wird ein neues Bundle für
+  jeden defer-Block erzeugt), kann man diese vorteile mit wenig Aufwand umsetzen.
+</p>
+
+<p>Die aktuelle Doku findet ihr <a href="hhttps://angular.dev/guide/defer" target="_blank">hier</a>.</p>
+
+<h3>SSR-Verbesserungen (stable)</h3>
+
+<p>
+  Die in V16 eingeführten Verbesserungen beim SSR sind nun als stable markiert und für den produktiven Einsatz
+  vorgesehen.
+</p>
+
+<h3>Esbuild (stable)</h3>
+
+<p>
+  Der in V16 eingeführte Esbuild-basierte Compiler ist nun stabil und kann (theoretisch) in allen Projekten eingesetzt
+  werden.
+</p>
+
+<h3>Signals (stable)</h3>
+
+<p>Die in V16 eingeführte Signals-API ist nun stabil und für den produktiven Einsatz freigegeben.</p>
+
+<h2>Neuigkeiten in Angular V17.1/2/3</h2>
+
+<p>Hier wurden noch etliche neue Erweiterungen für Signals nachgereicht, die es nicht mehr in V17 geschafft hatten.</p>
+
+<ul>
+  <li>Signal Inputs</li>
+  <li>Signal queries</li>
+  <li>Model Inputs</li>
+  <li>Signal Outputs</li>
+</ul>
+
+<p>Diese werde ich im entsprechenden Abschnitt über Signals zeigen.</p>

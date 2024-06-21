@@ -1,0 +1,164 @@
+<h2>Signals in Angular</h2>
+
+<mat-tab-group>
+  <mat-tab label="Signals Grundlagen">
+    <p>
+      Signals sind der Versuch, das Konzept der reaktiven Programmierung in Angular zu vereinfachen und weniger
+      umständlich zu machen. Sie sind Teil eines größeren Umbaus von Angular hin zu reaktiven und funktionalen Ansätzen.
+      Andere Beispiele hier sind das Ersetzen von Klassen durch Funktionen (z.B. Router Guards), das neue
+      Injection-System ohne Konstruktor oder das zunehmende Verschwinden der Decorator-Syntax.
+    </p>
+    <p>
+      Ich nehme Wetten an, bei welcher Angular Version wir zum ersten Mal funktionale Components als neues Feature sehen
+      werden.
+    </p>
+
+    <p>
+      Wer auch mit anderen Web-Frameworks arbeitet, wird sicher schon über das Konzept gestolpert sein. Der Vorläufer
+      sind die allseits bekannten React Hooks, oder Signals aus dem Framework
+      <a href="https://docs.solidjs.com/concepts/intro-to-reactivity" target="_blank">SolidJS</a> wo sie von Anfang an
+      als Grundkonzept eingebaut wurden. Die SolidJS Doku erklärt übrigens auch sehr gut die Konzepte hinter Signals,
+      ein Blick lohnt sich also auch für Angular Entwickler.
+    </p>
+
+    <p>Ein Signal ist im Prinzip ein Behälter für einen beliebigen Wert.</p>
+
+    <pre><code [highlight]="example1" language="typescript" lineNumbers></code></pre>
+
+    <p>
+      Die Besonderheit ist, andere Teile der Anwendung können dieses Signal abonnieren und sich automatisch über
+      Änderungen informieren lassen. Wird dieser Aufruf von "count()" also z.B. in einem Template verwendet, wird dieses
+      Signal an die Angular Change Detection gebunden. Ändert sich der Wert dieses Signals, löst das automatisch ein
+      Update des Templates aus.
+    </p>
+
+    <p>
+      Einen guten Einstieg in das Thema Signals findet ihr
+      <a href="https://angular.dev/guide/signals" target="_blank">direkt in der Angular Dokumentation</a>.
+    </p>
+  </mat-tab>
+
+  <mat-tab label="Computed Signals">
+    <h3>Computed Signals</h3>
+
+    <p>Computed Signals sind Signals, die andere als Eingabe verwenden und einen daraus abgeleiteten Wert berechnen.</p>
+
+    <pre><code [highlight]="example2" language="typescript" lineNumbers></code></pre>
+
+    <p>
+      Wann immer sich das oder die Eingabe-Signal(e) ändern, sendet auch das Computed Signal eine Aktualisierung an alle
+      Subscriber. Aus der Sicht des lesenden Codes ist kein Unterschied zwischen einem normalen und einem Computed
+      Signal vorhanden.
+    </p>
+  </mat-tab>
+
+  <mat-tab label="Effects">
+    Ein Effect wird verwendet, um bei Aktualisierung eines Signals Seiteneffekte auszulösen. Ein Beispiel ist:
+    <ul>
+      <li>User klickt auf ein Element einer Liste (Signal erhält einen neuen Wert mit der ID des Elements).</li>
+      <li>
+        Ein Effect, der auf das Signal lauscht, erhält die neue ID und führt einen HTTP-Request aus, um Detaildaten für
+        dieses element zu laden.
+      </li>
+      <li>Nach Ankunft der neuen Daten werden diese in einem weiteren Signal gespeichert.</li>
+      <li>Das Template, welches das zweite Signal gebunden hat, löst eine Aktualisierung aus.</li>
+    </ul>
+
+    <pre><code [highlight]="example3" language="typescript" lineNumbers></code></pre>
+
+    <p>
+      Wichtig: Effects werden im Gegensatz zu RXJS Subscriptions automatisch aufgeräumt, wenn der umgebende Kontext
+      (Component, Service) zerstört werden. Ein manuelles Aufräumen ist möglich.
+    </p>
+  </mat-tab>
+
+  <mat-tab label="Signal Inputs/Outputs">
+    <p>
+      In einer zweiten Ausbaustufe der Signals hat das Angular-Team die bisherige Input/Output-Funktionalität um eine
+      Signal-basierte Alternative ergänzt.
+    </p>
+
+    <p>Statt der bisherigen Decorator-Syntax werden nun einfache Funktionen zur Definition verwendet.</p>
+
+    <pre><code [highlight]="example4" language="typescript" lineNumbers></code></pre>
+
+    <p>
+      Signal-Inputs verhalten sich ansonsten wie normale Signals. Damit fügt sich nun auch die Kommunikation zwischen
+      Components in das neue Konzept ein und ein Input kann problemlos über "computed" oder "effect" weiterverarbeitet
+      werden.
+    </p>
+  </mat-tab>
+
+  <mat-tab label="Signal Queries">
+    <p>
+      Analog zu den Inputs gibt es in Angular nun auch die Möglichkeit Component-Queries wie "ViewChild, ContentChildren
+      ..." als Signals zu verarbeiten. Ein weiterer Vorteil ist die einfachere, entschlackte Syntax der neuen
+      Funktionen.
+    </p>
+  </mat-tab>
+
+  <mat-tab label="Angular ohne Zone.js">
+    <p>
+      Ein langfristiges Ziel für den Umstieg auf eine Signal-basierte Architektur. Ist eine Vereinfachung des
+      Change-Detection-Algorithmus in Angular-Anwendungen. Der bisherige "Just magically works"-Ansatz hat zwar dazu
+      geführt, dass die Change Detection einfach handhabbar war und sich viele Entwickler darüber kaum Gedanken machen
+      mussten. Das hatte gerade in komplexeren Anwendungen oft einen Preis:
+    </p>
+
+    <ul>
+      <li>Die Change Detection wurde viel zu oft und teilweise mehrfach für eine einzelne Änderung ausgeführt.</li>
+      <li>Dies resultierte in Performance-Problemen oder scher zu findenden Bugs.</li>
+      <li>Der Überblick, wann genau eine Change Detection läuft, ging oft verloren.</li>
+    </ul>
+
+    <p>
+      Das neue, reaktive und explizite System wird derartige Probleme nicht haben. Es ist jederzeit klar, was genau zum
+      Update einer Component führt.
+    </p>
+
+    <p>
+      Ein weiterer, großer Vorteil ist, dass die neue Change Detection ohne Zone.js auskommen kann. Seit Angular V18
+      gibt es (aktuell experimentell) die Möglichkeit, auf Zone.js komplett zu verzichten, so lange man entweder
+      komplett mit Signals arbeitet oder alle Components konsistent mit der OnPush-Strategie entwickelt hat.
+    </p>
+
+    <p>
+      Neben dem etwas kleineren Build-Ergebnis (Bonus ;-) ) besteht der große Vorteil darin, dass Angular so besser mit
+      anderen Frameworks und mehreren Angular-Anwendungen auf einer Browser-Seite zusammenarbeiten kann. Gerade bei
+      Microfrontend-Architekturen war Angular bisher immer das Problemkind, da es auf eine globale Zone.js Instanz
+      angewiesen war. Diese hat zuerst einmal den kompletten Browser gepatcht und damit potentiell Einfluss auf die
+      anderen Anwendungen der Seite genommen.
+    </p>
+
+    <p>
+      Hinweis: Die aktuelle Anwendung, die ihr gerade seht, ist Zone-less umgesetzt. Bisher sind mir keine Probleme
+      aufgefallen, aber die Komplexität der App ist auch nicht sonderlich hoch. Aktuell hat noch niemand wirklich
+      Erfahrung, wie sich Angular ohne Zone.js in einer großen Enterprise-Anwendung verhält. Die anderen Frameworks, die
+      schon länger auf einen reaktiven Ansatz setzen, sind allerdings ziemlich erfolgreich, also bin ich optimistisch.
+    </p>
+  </mat-tab>
+
+  <mat-tab label="Beispiele">
+    <div>
+      <p>Counter: {{ counter() }}</p>
+      <p>Counter doppelt: {{ doubleCounter() }}</p>
+
+      <button mat-flat-button (click)="increaseCounter()">increase</button>
+      <button mat-flat-button (click)="decreaseCounter()">decrease</button>
+
+      <br />
+      <br />
+      <br />
+
+      <p>Signalwert an Child-Component weitergeben (signal input)</p>
+      <app-pretty-counter [counter]="doubleCounter()" (onClick)="decreaseCounter()" />
+
+      <br />
+      <br />
+      <br />
+
+      Todo:
+      <pre>{{ todo() | json }}</pre>
+    </div>
+  </mat-tab>
+</mat-tab-group>

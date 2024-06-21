@@ -1,0 +1,52 @@
+<h2>Neuigkeiten in Angular V18</h2>
+
+<h3>Neue Template Syntax (stable)</h3>
+
+<p>Die in V17 eingeführte neue Template Syntax zum Kontrollfluss ist nun als stable markiert.</p>
+
+<h3>Material 3</h3>
+
+<p>Mit &#64;angular/material V18 wir die neue Version 3 des Material Styleguides von Google eingeführt.</p>
+
+<p>
+  Warnung für alle Projekte, die &#64;angular/material nutzen: Dort hat sich optisch einiges geändert im Vergleich zu
+  V2, sowohl bei den Farben, der Typographie als auch bei den einzelnen Components. Eure Anwendungen werden nach dem
+  Update also "anders" aussehen. Es ist möglich, weiterhin eine V2-Optik wiederherzustellen, aber das kostet Zeit die im
+  Projekt eingeplant werden muss.
+</p>
+
+<figure class="center">
+  <img src="migration-buttons-update.png" alt="Vergleich Material 2 vs. 3" width="800" />
+  <figcaption>Beispiel der optischen Unterschiede anhand Material Buttons</figcaption>
+</figure>
+
+<p>
+  Auch das Theming wurde grundlegend überarbeitet. Wer mit einem angepassten Material-Theme arbeitet, wird nach dem
+  Update auch dort Anpassungen vornehmen müssen.
+</p>
+
+<h3>Zoneless change detection (experimental)</h3>
+
+<p>
+  Es ist nun möglich, eine Angular-Anwendung ohne geladenes Zone.js zu betreiben. Details bespreche ich gleich im
+  Abschnitt Signals.
+</p>
+
+<h3>Weitere SSR Verbesserungen</h3>
+
+<p>
+  Die eingeführte Funktion der Hydration beim Server Side Rendering wurde nun weiter in Angular integriert. So haben
+  jetzt Angular Material und die i18n-Lösung Unterstützung für Hydration und die Dev-Tools zeigen jetzt den
+  Hydration-Status einer Component an.
+</p>
+
+<h3>eventCoalescing ist standardmäßig für neue Apps aktiviert.</h3>
+
+<p>
+  Die Konfiguration <a href="https://angular.dev/api/core/NgZoneOptions" target="_blank">eventCoalescing</a> ist nun
+  standardmäßig für neue Apps aktiviert. Diese bewirkt, dass beim Auslösen mehrerer Events nur noch eine Change
+  Detection ausgeführt wird. Das kann die Performance einer Angular Anwendung verbessern, aber bitte bei
+  Bestandsanwendungen aufpassen. Das Verhalten, wann ein Change ausgelöst wird, ändert sich damit. Das kann besonders
+  bei älteren und weniger sauber programmierten Anwendungen, die sich blind darauf verlassen, dass Angular automatisch
+  merkt, dass sich etwas geändert hat (Stichwort: OnPush) zu Überraschungen führen.
+</p>

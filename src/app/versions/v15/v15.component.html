@@ -1,0 +1,60 @@
+<h2>Neuigkeiten in Angular V15</h2>
+
+<h3>Standalone Components (stable)</h3>
+
+<p>
+  Mit Angular 15 wurde die Standalone API als stabil gekennzeichnet, also für alle Entwickler freigegeben. Als Ausblick,
+  mit V17 wurde Standalone der Standard für neue Projekte (ng new).
+</p>
+
+<h3>Image Directive</h3>
+
+<p>
+  Die Angular <a href="https://angular.dev/guide/image-optimization" target="_blank"> Image Directive</a>, genauer
+  "NgOptimizedImage" ist ein Ersatz für das src-Attribut bei img-Tags. Der Vorteil gegenüber dem normalen "src" ist,
+  dass so viele Optimierungen in Richtung
+  <a href="https://web.dev/explore/learn-core-web-vitals?hl=de" target="_blank">Web Vitals</a> und best practices
+  aktiviert werden.
+</p>
+
+<ul>
+  <li>Verwaltet "fetchpriority" und lazy loading von Bildern.</li>
+  <li>Verwendet "srcset" für verschiedene Bildgrößen (Thema mobile).</li>
+  <li>Einfache Anbindung an CDNs.</li>
+  <li>Unterstützt beim Generieren von Anwendungen mit SSR-Unterstützung.</li>
+</ul>
+
+<p>
+  Generell, gerade wer in einem öffentlich sichtbaren Projekt arbeitet, wo Themen wie Web Vitals oder SEO relevanter
+  sind, ist die Image Directive ein einfacher "Win" ohne großartigen Mehraufwand oder Nachteile.
+</p>
+
+<h3>Router Guards als Funktionen</h3>
+
+<p>
+  Bisher mussten Router Guards immer als Klassen implementiert werden, was gerade für einfache Fälle (Test: Login ==
+  true) viel Boilerplate Code bedeutet. Seit V15 kann man in der Router-Konfiguration nur eine Funktion verwenden, die
+  das Ergebnis ermittelt. Gerade im Kombination mit der neuen inject-Funktion (Ab Angular V16) kann man so sehr kompakte
+  Guards schreiben:
+</p>
+
+<pre><code [highlight]="example1" language="typescript" lineNumbers></code></pre>
+
+<h3>Angular Material: Umstieg auf MDC Web Components</h3>
+
+<p>
+  Die Komponenten-Bibliothek "&#64;angular/material" setzt nun auf dem Material-Schwesterprojekt
+  <a href="https://m3.material.io/develop/web" target="_blank">MDC (Material Components for Web)</a> auf. In den Angular
+  Components werden nun also native Web Components verwendet, die eigentlichen Angular Komponenten sind größtenteils nur
+  Container, die Angular-spezifische Funktionen nachrüsten.
+</p>
+
+<p>
+  Wichtig: Für alle mit legacy Projekten, die demnächst auf Material >= 15 aktualisieren müssen. Das ganze Custom CSS in
+  eurer App, mit dem ihr Material an das Kunden-UX angepasst habt, wird nicht mehr funktionieren.
+</p>
+
+<figure class="center">
+  <img src="angel.webp" alt="Unschulds-Dino" />
+  <figcaption>Viel Spaß!</figcaption>
+</figure>
